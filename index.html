@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Luogu Sample Searcher</title>
+<style type="text/css">
+a:link, a:visited { color: blue; text-decoration: none; }
+a:hover, a:active { color: blue; text-decoration: underline; }
+</style>
+</head>
+<body style="text-align:center;font-family:Consolas;">
+<h1>Luogu Sample Searcher</h1>
+<textarea placeholder="Put the sample here..." id="t" style="width:calc(100% - 50px);height:200px;resize:none;font-size:16px;"></textarea>
+<br>
+<button onclick="f(0)">Search input</button>
+<button onclick="f(1)">Search output</button>
+<ul id="r" style="text-align:left;"></ul>
+<p id="s"></p>
+<p>Made By CMK | <a href="https://github.com/cmk666/luogusamplesearcher">GitHub</a></p>
+<script type="text/javascript">
+function f(g) {
+	var xhr = new XMLHttpRequest()
+	var ct = document.getElementById('t').value
+	var url = encodeURI('/search?content=' + ct + '&type=' + g)
+	xhr.open('GET', url, false)
+	xhr.send(null)
+	var ret = JSON.parse(xhr.response)
+	var res = ''
+	for ( var j in ret )
+	{
+		var i = ret[j]
+		res += '<li><a href="https://www.luogu.com.cn/problem/P'
+		res += i['PID'] + '" target="_blank">P' + i['PID'] + '</a>'
+		res += ' Sample#' + i['SID']
+		res += ' (similarity ' + i['SIM'] + '%)</li>'
+	}
+	document.getElementById('r').innerHTML = res
+	res = 'Find ' + ret.length + ' result'
+	if ( ret.length != 1 ) res += 's'
+	document.getElementById('s').innerText = res
+}
+</script>
+</body>
+</html>
