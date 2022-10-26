@@ -6,7 +6,7 @@ f = open('index.html')
 html = f.read()
 f.close()
 def simi(x, y):
-	return int(100 * difflib.SequenceMatcher(None, x, y).quick_ratio())
+	return int(100 * difflib.SequenceMatcher(None, x, y).ratio())
 @app.get('/')
 def index():
 	return html
@@ -14,6 +14,8 @@ def index():
 def search():
 	ret = []
 	ct = request.args.get('content').strip()
+	if len(ct) > 300:
+		return jsonify([])
 	suf = 'out' if request.args.get('type') == '1' else 'in'
 	for fn in os.listdir('problem'):
 		if fn.split('.')[-1] == suf:
