@@ -23,9 +23,9 @@ def save(idx, sam):
 	try:
 		for i in range(len(sam)):
 			with open(pjoin('problem', f'P{idx}_{i + 1}.in'), 'w') as f:
-				f.write(sam[i][0])
+				f.write(sam[i][0].strip())
 			with open(pjoin('problem', f'P{idx}_{i + 1}.out'), 'w') as f:
-				f.write(sam[i][1])
+				f.write(sam[i][1].strip())
 	except Exception as e:
 		print(f'Error {e}')
 l, r = map(int, input('From ?~?: ').split())
